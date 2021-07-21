@@ -1,0 +1,27 @@
+{
+  "name": "sti-oobs-sample",
+  "version": "1.0.0",
+  "description": "STI-OOBS Sample",
+  "license": "MIT",
+  "author": "TransNexus, Inc.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TransNexus/sti-oobs-sample.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jws": "^4.0.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0"
+  },
+  "engines": {
+    "node": ">= 10.0.0"
+  }
+}
