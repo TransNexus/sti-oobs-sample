@@ -50,7 +50,7 @@ async function main() {
       payload: {
         iat: Math.floor(Date.now() / 1000),
         action: 'publish',
-        sub: config.serviceProviderCode,
+        spc: config.serviceProviderCode,
         iss: config.serviceProviderCode,
         aud: 'cps.transnexus.com',
         jti: uuid.v4(),
@@ -70,7 +70,7 @@ async function main() {
     // Publish PASSporT
     console.log('------------------ Publish Response ------------------');
     const publishResponse = await axios.request({
-      url: `https://cps.transnexus.com/passports/${config.calledNumber}/${config.callingNumber}`,
+      url: `https://cps.transnexus.com/passports/${config.serviceProviderCode}/${config.calledNumber}/${config.callingNumber}`,
       method: 'post',
       data: {
         passports: [
@@ -93,7 +93,7 @@ async function main() {
       payload: {
         iat: Math.floor(Date.now() / 1000),
         action: 'retrieve',
-        sub: config.serviceProviderCode,
+        spc: config.serviceProviderCode,
         iss: config.serviceProviderCode,
         aud: 'cps.transnexus.com',
         jti: uuid.v4(),
@@ -112,7 +112,7 @@ async function main() {
     // Retrieve PASSporT
     console.log('------------------ Retrieve Response ------------------');
     const retrieveResponse = await axios.request({
-      url: `https://cps.transnexus.com/passports/${config.calledNumber}/${config.callingNumber}`,
+      url: `https://cps.transnexus.com/passports/${config.serviceProviderCode}/${config.calledNumber}/${config.callingNumber}`,
       method: 'get',
       headers: {
         'Authorization': `Bearer ${retrieveAuthenticationToken}`,
