@@ -20,6 +20,7 @@ This script requires a private key and a config file to function. The private ke
   "serviceProviderCode": "1234",
   "callingNumber": "12013776051",
   "calledNumber": "19032469103",
-  "attestationLevel": "A"
+  "attestationLevel": "A",
+  "retentionTime": 3
 }
 ```

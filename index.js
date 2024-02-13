@@ -49,6 +49,7 @@ async function main() {
       },
       payload: {
         iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + config.retentionTime,
         action: 'publish',
         spc: config.serviceProviderCode,
         iss: config.serviceProviderCode,
