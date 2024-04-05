@@ -36,7 +36,7 @@ async function main() {
         orig: {
           tn: config.callingNumber,
         },
-        origid: uuid.v4(),
+        origid: config.originationIdentifier || uuid.v4(),
       },
       secret: privateKey,
     });
