@@ -16,7 +16,7 @@ This script requires a private key and a config file to function. The private ke
 
 ```json
 {
-  "certificateRepositoryUrl": "https://certificates.example.com/example.crt",
+  "certificateRepositoryUrl": "https://certificates.example.com/example.pem",
   "serviceProviderCode": "1234",
   "callingNumber": "12013776051",
   "calledNumber": "19032469103",
