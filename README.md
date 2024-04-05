@@ -8,7 +8,7 @@ This script:
 4. Generates an STI-CPS retrieve authentication token
 5. Retrieves the PASSporT from the [TransNexus CPS](https://cps.transnexus.com) using an HTTP GET
 
-The [TransNexus CPS](https://cps.transnexus.com) is a completely free STI-CPS that can be used by any service provider with a SHAKEN certificate issued by an STI-PA approved STI-CA. The [TransNexus CPS](https://cps.transnexus.com) is ATIS-1000096 compliant.
+The [TransNexus CPS](https://cps.transnexus.com) is a completely free STI-CPS that can be used by any service provider with a SHAKEN certificate issued by an STI-PA approved STI-CA.
 
 ## Config
 
