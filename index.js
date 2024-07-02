@@ -41,6 +41,15 @@ async function main() {
       secret: privateKey,
     });
 
+    // Check health
+    const healthResponse = await axios.request({
+      url: `https://cps.transnexus.com/health`,
+      method: 'get',
+      httpsAgent: agent,
+    });
+    console.log('------------------- Health Response ------------------');
+    console.log(JSON.stringify(healthResponse.data, null, 2), '\n');
+
     // Generate publish authentication token
     const publishAuthenticationToken = jws.sign({
       header: {
@@ -69,7 +78,7 @@ async function main() {
     });
 
     // Publish PASSporT
-    console.log('------------------ Publish Response ------------------');
+    const publishStartTime = process.hrtime();
     const publishResponse = await axios.request({
       url: `https://cps.transnexus.com/passports/${config.serviceProviderCode}/${config.calledNumber}/${config.callingNumber}`,
       method: 'post',
@@ -83,6 +92,8 @@ async function main() {
       },
       httpsAgent: agent,
     });
+    const publishLatency = process.hrtime(publishStartTime);
+    console.log('------------------ Publish Response ------------------');
     console.log(JSON.stringify(publishResponse.data, null, 2), '\n');
 
     // Generate retrieve authentication token
@@ -111,7 +122,7 @@ async function main() {
     });
 
     // Retrieve PASSporT
-    console.log('------------------ Retrieve Response ------------------');
+    const retrieveStartTime = process.hrtime();
     const retrieveResponse = await axios.request({
       url: `https://cps.transnexus.com/passports/${config.serviceProviderCode}/${config.calledNumber}/${config.callingNumber}`,
       method: 'get',
@@ -120,7 +131,14 @@ async function main() {
       },
       httpsAgent: agent,
     });
+    const retrieveLatency = process.hrtime(retrieveStartTime);
+    console.log('------------------ Retrieve Response -----------------');
     console.log(JSON.stringify(retrieveResponse.data, null, 2), '\n');
+
+    // Print latency
+    console.log('---------------------- Latency -----------------------');
+    console.log(`Publish: ${publishLatency[0] * 1000 + publishLatency[1] / 1000000} ms`);
+    console.log(`Retrieve: ${retrieveLatency[0] * 1000 + retrieveLatency[1] / 1000000} ms`);
 
   } catch (err) {
     console.error(JSON.stringify(err.response.data, null, 2), '\n');

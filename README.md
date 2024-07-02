@@ -3,10 +3,12 @@
 This script:
 
 1. Generates a PASSporT
-2. Generates an STI-CPS publish authentication token
-3. Publishes the PASSporT to the [TransNexus CPS](https://cps.transnexus.com) using an HTTP POST
-4. Generates an STI-CPS retrieve authentication token
-5. Retrieves the PASSporT from the [TransNexus CPS](https://cps.transnexus.com) using an HTTP GET
+1. Checks STI-CPS health
+1. Generates an STI-CPS publish authentication token
+1. Publishes the PASSporT to the [TransNexus CPS](https://cps.transnexus.com) using an HTTP POST
+1. Generates an STI-CPS retrieve authentication token
+1. Retrieves the PASSporT from the [TransNexus CPS](https://cps.transnexus.com) using an HTTP GET
+1. Prints publish and retrieve latency
 
 The [TransNexus CPS](https://cps.transnexus.com) is a completely free STI-CPS that can be used by any service provider with a SHAKEN certificate issued by an STI-PA approved STI-CA.
 
