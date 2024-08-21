@@ -1,20 +1,19 @@
 # STI-OOBS Sample
 
-This script:
-
 1. Generates a PASSporT
-1. Checks STI-CPS health
+1. Checks the [TransNexus STI-CPS](https://cps.transnexus.com) health
+1. Prints the health response body
 1. Generates an STI-CPS publish authentication token
-1. Publishes the PASSporT to the [TransNexus CPS](https://cps.transnexus.com) using an HTTP POST
+1. Publishes the PASSporT to the [TransNexus STI-CPS](https://cps.transnexus.com)
+1. Prints the publish response body
 1. Generates an STI-CPS retrieve authentication token
-1. Retrieves the PASSporT from the [TransNexus CPS](https://cps.transnexus.com) using an HTTP GET
-1. Prints publish and retrieve latency
-
-The [TransNexus CPS](https://cps.transnexus.com) is a completely free STI-CPS that can be used by any service provider with a SHAKEN certificate issued by an STI-PA approved STI-CA.
+1. Retrieves the PASSporT from the [TransNexus STI-CPS](https://cps.transnexus.com)
+1. Prints the retrieve response body
+1. Prints the latency of each request
 
 ## Config
 
-This script requires a private key and a config file to function. The private key must be in the file `./privateKey.pem`. The config file must be `./config.json`. The config file must include all of the fields show below:
+The private key must be in the file `./privateKey.pem`. The config file must be `./config.json`. The config file must include all of the fields show below:
 
 ```json
 {
