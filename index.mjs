@@ -1,9 +1,12 @@
+import { Buffer } from 'node:buffer';
+import { error, log } from 'node:console';
+import { createPrivateKey, hash, randomUUID, sign } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { connect } from 'node:http2';
-import { randomUUID, hash, sign } from 'node:crypto';
+import { hrtime } from 'node:process';
 
 const config = JSON.parse(await readFile('./config.json'));
-const privateKey = await readFile('./privateKey.pem');
+const privateKey = createPrivateKey(await readFile('./privateKey.pem'));
 
 function jwt({header, payload, algorithm, privateKey}) {
   return new Promise((resolve, reject) => {
@@ -39,7 +42,7 @@ function request(requestHeaders, requestBody) {
 const session = connect('https://cps.transnexus.com');
 
 session.on('error', err => {
-  console.error(err);
+  error(err);
 });
 
 session.on('connect', async () => {
@@ -67,14 +70,14 @@ session.on('connect', async () => {
     privateKey: privateKey,
   });
 
-  const healthStartTime = process.hrtime();
+  const healthStartTime = hrtime();
   const healthResponse = await request({
     ':path': '/health',
   });
-  const healthLatency = process.hrtime(healthStartTime);
-  console.log('------------------- Health Response ------------------');
-  console.log(healthResponse);
-  console.log('');
+  const healthLatency = hrtime(healthStartTime);
+  log('------------------- Health Response ------------------');
+  log(healthResponse);
+  log('');
 
   const publishAuthenticationToken = await jwt({
     header: {
@@ -103,7 +106,7 @@ session.on('connect', async () => {
     privateKey: privateKey,
   });
 
-  const publishStartTime = process.hrtime();
+  const publishStartTime = hrtime();
   const publishResponse = await request({
     ':method': 'POST',
     ':path': `/passports/${config.serviceProviderCode}/${config.calledNumber}/${config.callingNumber}`,
@@ -114,10 +117,10 @@ session.on('connect', async () => {
       passport,
     ],
   }));
-  const publishLatency = process.hrtime(publishStartTime);
-  console.log('------------------ Publish Response ------------------');
-  console.log(publishResponse);
-  console.log('');
+  const publishLatency = hrtime(publishStartTime);
+  log('------------------ Publish Response ------------------');
+  log(publishResponse);
+  log('');
 
   const retrieveAuthenticationToken = await jwt({
     header: {
@@ -144,20 +147,20 @@ session.on('connect', async () => {
     privateKey: privateKey,
   });
 
-  const retrieveStartTime = process.hrtime();
+  const retrieveStartTime = hrtime();
   const retrieveResponse = await request({
     ':path': `/passports/${config.serviceProviderCode}/${config.calledNumber}/${config.callingNumber}`,
     'authorization': `Bearer ${retrieveAuthenticationToken}`,
   });
-  const retrieveLatency = process.hrtime(retrieveStartTime);
-  console.log('------------------ Retrieve Response -----------------');
-  console.log(retrieveResponse);
-  console.log('');
+  const retrieveLatency = hrtime(retrieveStartTime);
+  log('------------------ Retrieve Response -----------------');
+  log(retrieveResponse);
+  log('');
 
-  console.log('---------------------- Latency -----------------------');
-  console.log(`Health: ${healthLatency[0] * 1000 + healthLatency[1] / 1000000} ms`);
-  console.log(`Publish: ${publishLatency[0] * 1000 + publishLatency[1] / 1000000} ms`);
-  console.log(`Retrieve: ${retrieveLatency[0] * 1000 + retrieveLatency[1] / 1000000} ms`);
+  log('---------------------- Latency -----------------------');
+  log(`Health: ${healthLatency[0] * 1000 + healthLatency[1] / 1000000} ms`);
+  log(`Publish: ${publishLatency[0] * 1000 + publishLatency[1] / 1000000} ms`);
+  log(`Retrieve: ${retrieveLatency[0] * 1000 + retrieveLatency[1] / 1000000} ms`);
 
   session.close();
 });
