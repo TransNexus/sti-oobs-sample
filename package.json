@@ -10,10 +10,10 @@
     "url": "git://github.com/TransNexus/sti-oobs-sample.git"
   },
   "engines": {
-    "node": ">= 22.0.0"
+    "node": "24"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.10.0"
+    "@eslint/js": "10.0.1",
+    "eslint": "10.10.0"
   }
 }
